@@ -1,0 +1,2 @@
+# Evakuatori-
+Evakuatoris gamodzaxeba 
