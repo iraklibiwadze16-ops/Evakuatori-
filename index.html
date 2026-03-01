@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I&T Group — ევაკუატორი თბილისი 24/7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        gold: { 300:'#fcd97d', 400:'#f5c842', 500:'#d4a017', 600:'#b8860b', 700:'#8B6914' },
+        ink:  { 900:'#0a0a0a', 800:'#111111', 700:'#1a1a1a', 600:'#2a2a2a', 500:'#3a3a3a' },
+      },
+      fontFamily: {
+        geo: ['"Noto Sans Georgian"', 'sans-serif'],
+        display: ['"Playfair Display"', 'serif'],
+      },
+      animation: {
+        'fade-up':    'fadeUp 0.7s ease both',
+        'fade-in':    'fadeIn 1s ease both',
+        'pulse-gold': 'pulseGold 2s infinite',
+        'slide-right':'slideRight 20s linear infinite',
+        'float':      'float 4s ease-in-out infinite',
+      },
+      keyframes: {
+        fadeUp:    { from:{ opacity:'0', transform:'translateY(30px)' }, to:{ opacity:'1', transform:'translateY(0)' } },
+        fadeIn:    { from:{ opacity:'0' }, to:{ opacity:'1' } },
+        pulseGold: { '0%,100%':{ boxShadow:'0 0 0 0 rgba(212,160,23,0.5)' }, '70%':{ boxShadow:'0 0 0 16px rgba(212,160,23,0)' } },
+        slideRight:{ from:{ transform:'translateX(0)' }, to:{ transform:'translateX(-50%)' } },
+        float:     { '0%,100%':{ transform:'translateY(0px)' }, '50%':{ transform:'translateY(-10px)' } },
+      }
+    }
+  }
+}
+</script>
+<style>
+  :root {
+    --gold: #d4a017;
+    --gold-light: #f5c842;
+    --ink: #0a0a0a;
+  }
+  * { scroll-behavior: smooth; }
+  body { font-family: 'Noto Sans Georgian', sans-serif; background: #0a0a0a; color: #f5f5f5; overflow-x: hidden; }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 200px;
+    opacity: 0.5;
+  }
+
+  section, header, footer, nav { position: relative; z-index: 1; }
+
+  .gold-line { background: linear-gradient(90deg, transparent, var(--gold), transparent); height: 1px; }
+  .gold-text { background: linear-gradient(135deg, #f5c842, #d4a017, #f5c842); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .gold-border { border: 1px solid rgba(212,160,23,0.35); }
+
+  nav {
+    backdrop-filter: blur(24px);
+    background: rgba(10,10,10,0.88);
+    border-bottom: 1px solid rgba(212,160,23,0.15);
+  }
+
+  .nav-link { position: relative; transition: color 0.3s; }
+  .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1px; background:var(--gold); transition:width 0.3s; }
+  .nav-link:hover::after { width: 100%; }
+  .nav-link:hover { color: var(--gold-light); }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=1600') center/cover no-repeat;
+    filter: brightness(0.12) saturate(0.4);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(212,160,23,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(212,160,23,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+  .hero-vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(10,10,10,0.9) 100%);
+  }
+
+  .tag-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(212,160,23,0.1);
+    border: 1px solid rgba(212,160,23,0.4);
+    color: var(--gold-light);
+    padding: 7px 18px; border-radius: 100px;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+  }
+
+  .service-card {
+    background: rgba(26,26,26,0.8);
+    border: 1px solid rgba(212,160,23,0.12);
+    border-radius: 16px;
+    padding: 36px 28px;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .service-card:hover { border-color: rgba(212,160,23,0.4); transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 40px rgba(212,160,23,0.05); }
+  .service-card:hover::before { opacity: 1; }
+
+  .icon-wrap {
+    width: 64px; height: 64px; border-radius: 14px;
+    background: rgba(212,160,23,0.08);
+    border: 1px solid rgba(212,160,23,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .about-stat {
+    text-align: center; padding: 24px;
+    border: 1px solid rgba(212,160,23,0.15);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+    transition: all 0.3s;
+  }
+  .about-stat:hover { border-color: rgba(212,160,23,0.4); background: rgba(212,160,23,0.05); }
+
+  .form-input {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 14px 18px;
+    color: #f5f5f5;
+    font-family: 'Noto Sans Georgian', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--gold); background: rgba(212,160,23,0.05); box-shadow: 0 0 0 3px rgba(212,160,23,0.1); }
+  .form-input::placeholder { color: #555; }
+
+  .btn-gold {
+    background: linear-gradient(135deg, #d4a017, #f5c842);
+    color: #0a0a0a;
+    font-weight: 700;
+    padding: 16px 40px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Noto Sans Georgian', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+    width: 100%;
+    animation: pulseGold 2s infinite;
+  }
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(212,160,23,0.4); filter: brightness(1.1); }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    padding: 14px 30px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+  }
+  .btn-outline:hover { background: var(--gold); color: #0a0a0a; }
+
+  .ticker-track { display: flex; width: max-content; animation: slideRight 18s linear infinite; gap: 0; }
+  .ticker-item { padding: 0 40px; white-space: nowrap; color: rgba(245,200,66,0.5); font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; }
+  .ticker-sep { color: var(--gold); }
+
+  .phone-badge {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: rgba(212,160,23,0.08);
+    border: 1px solid rgba(212,160,23,0.3);
+    border-radius: 100px;
+    padding: 10px 22px;
+    color: var(--gold-light);
+    font-size: 1.1rem; font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .phone-badge:hover { background: var(--gold); color: #0a0a0a; }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @keyframes pulseGold {
+    0%,100% { box-shadow: 0 0 0 0 rgba(212,160,23,0.5); }
+    70%      { box-shadow: 0 0 0 14px rgba(212,160,23,0); }
+  }
+
+  @media(max-width:640px) {
+    .hero-title { font-size: 2.6rem !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
+        <i class="fas fa-truck-pickup text-black text-sm"></i>
+      </div>
+      <span class="font-bold text-white text-lg tracking-wide">I<span class="gold-text">&amp;</span>T <span class="gold-text">Group</span></span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+      <a href="#services" class="nav-link">სერვისები</a>
+      <a href="#about" class="nav-link">ჩვენ შესახებ</a>
+      <a href="#contact" class="nav-link">კონტაქტი</a>
+    </div>
+    <a href="tel:+995555000000" class="hidden md:flex items-center gap-2 text-yellow-400 font-bold text-sm hover:text-yellow-300 transition-colors">
+      <i class="fas fa-phone-alt"></i>
+      +995 555 00 00 00
+    </a>
+    <button id="menuBtn" class="md:hidden text-gray-400 text-xl">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+  <div id="mobileMenu" class="hidden md:hidden px-6 pb-4 border-t border-gray-800">
+    <div class="flex flex-col gap-4 pt-4 text-sm text-gray-400">
+      <a href="#services" class="nav-link" onclick="closeMenu()">სერვისები</a>
+      <a href="#about" class="nav-link" onclick="closeMenu()">ჩვენ შესახებ</a>
+      <a href="#contact" class="nav-link" onclick="closeMenu()">კონტაქტი</a>
+      <a href="tel:+995555000000" class="text-yellow-400 font-bold"><i class="fas fa-phone-alt mr-2"></i>+995 555 00 00 00</a>
+    </div>
+  </div>
+</nav>
+
+<div class="fixed top-[65px] left-0 right-0 z-40 overflow-hidden py-2" style="background:rgba(10,10,10,0.7); border-bottom:1px solid rgba(212,160,23,0.1);">
+  <div class="ticker-track">
+    <span class="ticker-item">24/7 სერვისი <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">სწრაფი ჩასვლა <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">თბილისი და მიდამოები <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">პროფესიონალური გუნდი <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">საუკეთესო ფასები <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">24/7 სერვისი <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">სწრაფი ჩასვლა <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">თბილისი და მიდამოები <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">პროფესიონალური გუნდი <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">საუკეთესო ფასები <span class="ticker-sep">✦</span></span>
+  </div>
+</div>
+
+<section class="relative min-h-screen flex items-center justify-center pt-28 pb-20 overflow-hidden">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-vignette"></div>
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+    <div class="w-[600px] h-[600px] rounded-full border border-yellow-600/5 animate-spin" style="animation-duration:30s;"></div>
+    <div class="absolute w-[400px] h-[400px] rounded-full border border-yellow-600/8 animate-spin" style="animation-duration:20s; animation-direction:reverse;"></div>
+  </div>
+  <div class="relative z-10 text-center max-w-4xl mx-auto px-6">
+    <div class="tag-pill mb-8" style="animation: fadeUp 0.6s ease both;">
+      <span class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
+      ხელმისაწვდომია ახლავე
+    </div>
+    <h1 class="hero-title font-bold leading-tight mb-6" style="font-size:clamp(2.8rem,7vw,5.5rem); animation: fadeUp 0.7s 0.15s ease both; opacity:0;">
+      <span class="text-white">ევაკუატორი</span><br>
+      <span class="gold-text">თბილისსა</span>
+      <span class="text-white"> და</span><br>
+      <span class="text-white">საქართველოში</span>
+    </h1>
+    <p class="text-gray-400 text-lg max-w-xl mx-auto mb-10 leading-relaxed" style="animation: fadeUp 0.7s 0.3s ease both; opacity:0;">
+      სწრაფი, საიმედო და პროფესიონალური ევაკუატორის სერვისი —
+      <span style="color:var(--gold)">24 საათი, 7 დღე.</span>
+    </p>
+    <div class="flex flex-wrap items-center justify-center gap-4" style="animation: fadeUp 0.7s 0.45s ease both; opacity:0;">
+      <a href="tel:+995555000000" class="phone-badge">
+        <i class="fas fa-phone-alt"></i>
+        +995 555 00 00 00
+      </a>
+      <a href="#contact" class="btn-outline">
+        <i class="fas fa-map-marker-alt"></i>
+        გამოძახება
+      </a>
+    </div>
+    <div class="grid grid-cols-3 gap-4 max-w-lg mx-auto mt-16" style="animation: fadeUp 0.7s 0.6s ease both; opacity:0;">
+      <div class="text-center">
+        <div class="text-3xl font-black gold-text">20'</div>
+        <div class="text-xs text-gray-500 mt-1 uppercase tracking-widest">ჩასვლა</div>
+      </div>
+      <div class="text-center border-x border-gray-800">
+        <div class="text-3xl font-black gold-text">24/7</div>
+        <div class="text-xs text-gray-500 mt-1 uppercase tracking-widest">სერვისი</div>
+      </div>
+      <div class="text-center">
+        <div class="text-3xl font-black gold-text">5★</div>
+        <div class="text-xs text-gray-500 mt-1 uppercase tracking-widest">შეფასება</div>
+      </div>
+    </div>
+  </div>
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600 text-xs tracking-widest uppercase animate-bounce">
+    <span>გადახვედი</span>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<section id="services" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <span class="tag-pill mb-4">სერვისები</span>
+      <h2 class="text-4xl md:text-5xl font-bold text-white mt-6 mb-4">ჩვენი <span class="gold-text">მომსახურება</span></h2>
+      <p class="text-gray-400 max-w-xl mx-auto">პროფესიონალური გუნდი მზადაა დაგეხმაროთ ნებისმიერ სიტუაციაში</p>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="service-card reveal">
+        <div class="icon-wrap"><i class="fas fa-truck-pickup"></i></div>
+        <h3 class="text-xl font-bold text-white mb-3">ევაკუატორი</h3>
+        <p class="text-gray-400 text-sm leading-relaxed mb-4">ნებისმიერი ტიპის ავტომობილის ევაკუაცია თბილისსა და საქართველოში. სწრაფი ჩასვლა.</p>
+        <div class="text-2xl font-black gold-text">60 ₾+</div>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.1s">
+        <div class="icon-wrap" style="background:rgba(59,130,246,0.08); border-color:rgba(59,130,246,0.2); color:#60a5fa;">
+          <i class="fas fa-bus-alt"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">მარშუტკა / მინივენი</h3>
+        <p class="text-gray-400 text-sm leading-relaxed mb-4">მარშუტკებისა და მინივენების ევაკუაცია სპეციალიზებული აღჭურვილობით.</p>
+        <div class="text-2xl font-black" style="color:#60a5fa;">90 ₾+</div>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.2s">
+        <div class="icon-wrap" style="background:rgba(16,185,129,0.08); border-color:rgba(16,185,129,0.2); color:#10b981;">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">გაქოქვა / სტარტი</h3>
+        <p class="text-gray-400 text-sm leading-relaxed mb-4">ბატარეის ჩამქრალი ავტომობილის დასაქოქად სწრაფი დახმარება ადგილზე.</p>
+        <div class="text-2xl font-black" style="color:#10b981;">30 ₾+</div>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.1s">
+        <div class="icon-wrap" style="background:rgba(239,68,68,0.08); border-color:rgba(239,68,68,0.2); color:#ef4444;">
+          <i class="fas fa-car-crash"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">ავარიული დახმარება</h3>
+        <p class="text-gray-400 text-sm leading-relaxed mb-4">ავარიის შემდეგ სწრაფი ევაკუაცია და ადგილზე პირველადი სერვისი.</p>
+        <div class="text-2xl font-black" style="color:#ef4444;">გამოძახება</div>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.2s">
+        <div class="icon-wrap" style="background:rgba(168,85,247,0.08); border-color:rgba(168,85,247,0.2); color:#a855f7;">
+          <i class="fas fa-road"></i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">გარეკრაური სერვისი</h3>
+        <p class="text-gray-400 text-sm leading-relaxed mb-4">მთელი საქართველოს მასშტაბით — მთიანი გზებიდან ქალაქამდე.</p>
+        <div class="text-2xl font-black" style="color:#a855f7;">ფასი შეთანხმებით</div>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.3s">
+        <div class="icon-wrap"><i class="fas fa-clock"></i></div>
+        <h3 class="text-xl font-bold text-white mb-3">24/7 სასწრაფო</h3>
+        <p class="text-gray-400 text-sm leading-relaxed mb-4">ღამის, დღის ან დასვენების დღეს — ყოველთვის ხელმისაწვდომი ვართ.</p>
+        <div class="text-2xl font-black gold-text">ყოველთვის</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<section id="about" class="py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="reveal">
+        <span class="tag-pill mb-6">ჩვენ შესახებ</span>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mt-6 mb-6 leading-tight">
+          I&amp;T Group —<br><span class="gold-text">სანდო პარტნიორი</span><br>გზაზე
+        </h2>
+        <p class="text-gray-400 leading-relaxed mb-6">
+          ჩვენ ვართ თბილისში მოქმედი ევაკუატორისა და ავტოდახმარების პროფესიონალური სერვისი.
+          წლების გამოცდილებით, ჩვენი გუნდი გთავაზობს სწრაფ, საიმედო და ხარისხიან მომსახურებას.
+        </p>
+        <p class="text-gray-500 leading-relaxed mb-8">
+          ჩვენი მიზანია — მაქსიმალურად სწრაფად მივიდეთ და პრობლემა ადგილზე მოვაგვაროთ.
+          ნებისმიერ ამინდში, ნებისმიერ საათზე.
+        </p>
+        <a href="#contact" class="btn-outline">
+          <i class="fas fa-arrow-right"></i>
+          დაგვიკავშირდი
+        </a>
+      </div>
+      <div class="grid grid-cols-2 gap-4 reveal" style="transition-delay:0.2s">
+        <div class="about-stat">
+          <div class="text-4xl font-black gold-text mb-2">500+</div>
+          <div class="text-sm text-gray-400 uppercase tracking-wider">შესრულებული გამოძახება</div>
+        </div>
+        <div class="about-stat">
+          <div class="text-4xl font-black gold-text mb-2">5+</div>
+          <div class="text-sm text-gray-400 uppercase tracking-wider">წლის გამოცდილება</div>
+        </div>
+        <div class="about-stat">
+          <div class="text-4xl font-black gold-text mb-2">20'</div>
+          <div class="text-sm text-gray-400 uppercase tracking-wider">საშუალო ჩასვლის დრო</div>
+        </div>
+        <div class="about-stat">
+          <div class="text-4xl font-black gold-text mb-2">24/7</div>
+          <div class="text-sm text-gray-400 uppercase tracking-wider">მუდმივი ხელმისაწვდომობა</div>
+        </div>
+        <div class="col-span-2 about-stat" style="background:rgba(212,160,23,0.05);">
+          <div class="flex items-center justify-center gap-3 text-yellow-400">
+            <i class="fas fa-shield-alt text-2xl"></i>
+            <div class="text-left">
+              <div class="font-bold text-white">სრულად დაზღვეული სერვისი</div>
+              <div class="text-xs text-gray-500 mt-0.5">თქვენი ავტომობილი დაცულია</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<section id="contact" class="py-24 px-6">
+  <div class="max-w-2xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <span class="tag-pill mb-4">კონტაქტი</span>
+      <h2 class="text-4xl md:text-5xl font-bold text-white mt-6 mb-4">
+        გამოიძახეთ <span class="gold-text">ახლავე</span>
+      </h2>
+      <p class="text-gray-400">შეავსეთ ფორმა და ჩვენ დაგიკავშირდებით რაც შეიძლება მალე</p>
+    </div>
+    <div class="reveal" style="background:rgba(26,26,26,0.8); border:1px solid rgba(212,160,23,0.15); border-radius:20px; padding:40px; backdrop-filter:blur(10px);">
+      <div class="flex flex-col sm:flex-row gap-4 mb-8 p-4 rounded-xl" style="background:rgba(212,160,23,0.06); border:1px solid rgba(212,160,23,0.2);">
+        <a href="tel:+995555000000" class="flex-1 flex items-center justify-center gap-3 py-3 rounded-lg font-bold transition-all" style="background:var(--gold); color:#0a0a0a;">
+          <i class="fas fa-phone-alt"></i>
+          დარეკვა
+        </a>
+        <a href="https://wa.me/995555000000" target="_blank" class="flex-1 flex items-center justify-center gap-3 py-3 rounded-lg font-bold transition-all" style="background:#25d366; color:#fff;">
+          <i class="fab fa-whatsapp"></i>
+          WhatsApp
+        </a>
+      </div>
+      <div class="text-center text-gray-600 text-sm mb-6 uppercase tracking-widest">ან დაწერეთ ჩვენთვის</div>
+      <form id="contactForm" onsubmit="submitForm(event)">
+        <div class="grid sm:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-xs text-gray-500 uppercase tracking-wider mb-2">სახელი</label>
+            <input type="text" class="form-input" placeholder="გიორგი მამულაშვილი" required>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-500 uppercase tracking-wider mb-2">ტელეფონი</label>
+            <input type="tel" id="phoneInput" class="form-input" placeholder="+995 5XX XX XX XX" required>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="block text-xs text-gray-500 uppercase tracking-wider mb-2">ლოკაცია / მისამართი</label>
+          <input type="text" class="form-input" placeholder="მაგ: რუსთაველის გამზ. 15, თბილისი" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-xs text-gray-500 uppercase tracking-wider mb-2">სერვისის ტიპი</label>
+          <select class="form-input" required>
+            <option value="" disabled selected>აირჩიეთ სერვისი</option>
+            <option>ევაკუატორი</option>
+            <option>მარშუტკა / მინივენი</option>
+            <option>გაქოქვა / სტარტი</option>
+            <option>ავარიული დახმარება</option>
+            <option>სხვა</option>
+          </select>
+        </div>
+        <div class="mb-6">
+          <label class="block text-xs text-gray-500 uppercase tracking-wider mb-2">შენიშვნა (სურვილისამებრ)</label>
+          <textarea class="form-input" rows="3" placeholder="დამატებითი ინფორმაცია..."></textarea>
+        </div>
+        <button type="submit" class="btn-gold">
+          <i class="fas fa-paper-plane mr-2"></i>
+          გაგზავნა
+        </button>
+      </form>
+      <div id="formSuccess" class="hidden text-center py-8">
+        <div class="text-5xl mb-4">✅</div>
+        <div class="text-white font-bold text-lg mb-2">მოთხოვნა მიღებულია!</div>
+        <div class="text-gray-400 text-sm">ჩვენ მალე დაგიკავშირდებით.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="py-10 px-6 border-t border-gray-900">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
+        <i class="fas fa-truck-pickup text-black text-xs"></i>
+      </div>
+      <span class="font-bold text-white">I&amp;T <span class="gold-text">Group</span></span>
+    </div>
+    <p class="text-gray-600 text-sm text-center">© 2026 I&T Group — ევაკუატორი თბილისი 24/7</p>
+    <a href="tel:+995555000000" class="text-yellow-400 font-bold text-sm hover:text-yellow-300 transition-colors">
+      <i class="fas fa-phone-alt mr-1"></i>+995 555 00 00 00
+    </a>
+  </div>
+</footer>
+
+<script>
+document.getElementById('menuBtn').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('hidden');
+});
+function closeMenu() {
+  document.getElementById('mobileMenu').classList.add('hidden');
+}
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const delay = parseFloat(e.target.style.transitionDelay || '0');
+      setTimeout(() => e.target.classList.add('visible'), delay * 1000);
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+const phoneInput = document.getElementById('phoneInput');
+phoneInput.addEventListener('input', function() {
+  let v = this.value.replace(/\D/g, '');
+  if (!v.startsWith('995')) {
+    if (v.startsWith('0')) v = '995' + v.slice(1);
+    else if (v.length > 0 && !v.startsWith('9')) v = '995' + v;
+  }
+  if (v.length >= 3) {
+    let f = '+995';
+    if (v.length > 3) f += ' ' + v.slice(3,6);
+    if (v.length > 6) f += ' ' + v.slice(6,8);
+    if (v.length > 8) f += ' ' + v.slice(8,10);
+    if (v.length > 10) f += ' ' + v.slice(10,12);
+    this.value = f.trim();
+  }
+});
+
+function submitForm(e) {
+  e.preventDefault();
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('formSuccess').classList.remove('hidden');
+}
+
+window.addEventListener('load', () => {
+  document.querySelectorAll('[style*="opacity:0"]').forEach(el => {
+    el.style.opacity = '';
+  });
+});
+</script>
+</body>
+</html>
